@@ -1,0 +1,93 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+    int data;
+    struct node* left ;
+    struct node* right;
+};
+node* insert(node * root , int data)
+{
+if(root == NULL)
+{
+    root = (struct node*)malloc(sizeof(struct node));
+    root->data = data;
+    root->left = NULL;
+    root->right = NULL;
+    return root;
+}
+else
+{
+    if(data > root->data) root->right=insert(root->right,data);
+    else root->left=insert(root->left,data);
+}
+}
+void preorder(node* root)
+{
+//cout<<"we are in preorder"<<endl;
+    if(root == NULL)
+    return;
+    cout<<root->data<<" ";
+    preorder(root->left);
+    preorder(root->right);
+}
+node* deletion(node * root , int data)
+{
+ if(root == NULL) return root;
+ else if(data > root->data) {root->right = deletion(root->right,data);}
+ else if(data < root->data) {root->left = deletion(root->left,data);}
+ else
+ {
+  //cout<<"we are in preorder"<<endl;
+   if(root->left != NULL && root->right==NULL)
+   {
+ // cout<<"we are in preorder"<<endl;
+     node *temp = root->left;
+     free(root);
+     return temp;
+   }
+   if(root->right != NULL && root->left==NULL)
+   {
+    //cout<<"we are in preorder"<<endl;
+     node *temp = root->right;
+     free(root);
+     return temp;
+   }
+   if(root->right == NULL && root->left==NULL)
+    {
+      delete root;
+      root = NULL;
+      return root;
+    }
+  //cout<<"we are in preorder"<<endl;
+   node * temp = root;
+   root = root->right;
+   while(root->left != NULL)
+   {
+     root = root->left;
+   }
+   temp->data = root->data;
+   data = root->data;
+   root=temp;
+   //cout<<"here"<<endl;
+   cout<<data<<endl;
+   //cout<<"root->right:"<<root->right->data<<endl;
+   root->right = deletion(root->right,data);
+   //root = temp;
+   //root->right = deletion(root->right,data);
+ }
+ 
+}
+int main()
+{
+node * root=NULL;
+root = insert(root , 5);
+insert(root,6);
+insert(root,9);
+insert(root,3);
+preorder(root);
+cout<<endl;
+node * dele = deletion(root,5);
+cout<<"we are in dele"<<endl;
+preorder(dele);
+}
