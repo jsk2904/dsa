@@ -23,7 +23,7 @@ void dfs(vector <int> gra[] , int visited[], int size)    ///creating dfs traver
   if(visited[size] == 0) visited[size] = 1;            //marking each node as visited in dfs visited is each node that we have visited or not have explored it
                                                        //fully yet
                                                        
-                                                       // in dfs we mark visited to that which we have fully explored
+                                                       // in bfs we mark visited to that which we have fully explored
   cout<<size<<" ";
   for(auto i = gra[size].begin() ; i != gra[size].end() ; i++) 
   {
